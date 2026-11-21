@@ -1,6 +1,6 @@
 // 1) Create a Supabase project, then paste its Project URL and anon key below.
-const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://ks1266702.supabase.co";
+const SUPABASE_ANON_KEY = "jvpbrprnjahbqycokfjg";
 const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("YOUR_") && !SUPABASE_ANON_KEY.includes("YOUR_");
 const db = configured ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 let items = [], movements = [], channel = null;
