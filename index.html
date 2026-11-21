@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>Tejasvi Communication | Stock & Inventory</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div id="loginView" class="login-wrap">
+    <section class="login-card">
+      <div class="brand-mark">TC</div><p class="eyebrow">INVENTORY MANAGEMENT</p>
+      <h1>Tejasvi <span>Communication</span></h1>
+      <p class="muted">Sign in to manage mobile phones and accessories.</p>
+      <form id="loginForm">
+        <label>Email address<input id="email" type="email" autocomplete="username" required placeholder="admin@example.com"></label>
+        <label>Password<input id="password" type="password" autocomplete="current-password" required placeholder="Enter password"></label>
+        <button class="primary full" type="submit">Sign in to dashboard</button>
+        <p id="loginError" class="error" role="alert"></p>
+      </form>
+      <p class="tiny muted">Admin accounts are created in your Supabase project.</p>
+    </section>
+  </div>
+
+  <div id="appView" class="app hidden">
+    <aside class="sidebar">
+      <div class="side-brand"><div class="brand-mark small">TC</div><div><b>Tejasvi</b><small>Communication</small></div></div>
+      <div class="side-label">WORKSPACE</div>
+      <button class="nav active" data-page="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav" data-page="inventory">▤ <span>Inventory</span></button>
+      <button class="nav" data-page="activity">↻ <span>Stock activity</span></button>
+      <div class="side-bottom"><span class="live-dot"></span> Live sync enabled <button id="logoutBtn" class="logout">Sign out ↗</button></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar"><div><p class="eyebrow">TEJASVI COMMUNICATION</p><h2 id="pageTitle">Dashboard</h2></div><div class="top-actions"><span id="connection" class="connection"><i></i> Connecting…</span><span id="userEmail" class="user-email"></span></div></header>
+      <section id="dashboardPage" class="page">
+        <div class="welcome"><div><h3>Your store at a glance</h3><p>Track mobile phones, accessories and available stock.</p></div><button class="primary" id="quickAdd">＋ Add item</button></div>
+        <div class="stats">
+          <article class="stat"><span>Total products</span><strong id="totalProducts">0</strong><small>Unique inventory items</small></article>
+          <article class="stat"><span>Total units in stock</span><strong id="totalUnits">0</strong><small>Across all categories</small></article>
+          <article class="stat"><span>Low stock items</span><strong id="lowStock">0</strong><small>At or below reorder level</small></article>
+          <article class="stat"><span>Inventory value</span><strong id="stockValue">₹0</strong><small>Based on purchase price</small></article>
+        </div>
+        <div class="panel"><div class="panel-head"><div><h3>Recently updated inventory</h3><p>Latest items and stock changes</p></div><button class="text-btn" data-goto="inventory">View all →</button></div><div id="recentList" class="table-wrap"></div></div>
+      </section>
+
+      <section id="inventoryPage" class="page hidden">
+        <div class="toolbar"><div class="searchbox">⌕ <input id="searchInput" placeholder="Search product, brand, model or SKU…"></div><select id="categoryFilter"><option value="">All categories</option><option>Mobile</option><option>Accessory</option></select><button class="primary" id="addItemBtn">＋ Add new item</button></div>
+        <div class="panel"><div class="panel-head"><div><h3>Inventory items</h3><p>Manage products, quantities and pricing</p></div><span id="itemCount" class="count">0 items</span></div><div id="inventoryList" class="table-wrap"></div></div>
+      </section>
+
+      <section id="activityPage" class="page hidden">
+        <div class="panel"><div class="panel-head"><div><h3>Stock activity</h3><p>Recorded additions, sales and adjustments</p></div></div><div id="activityList" class="table-wrap"></div></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="itemDialog">
+    <form id="itemForm" class="modal-form">
+      <div class="modal-head"><div><p class="eyebrow">INVENTORY</p><h3 id="modalTitle">Add new item</h3></div><button type="button" class="icon-btn" id="closeDialog">✕</button></div>
+      <input type="hidden" id="itemId">
+      <div class="form-grid">
+        <label>Item name *<input id="name" required placeholder="e.g. Galaxy S24"></label>
+        <label>Category *<select id="category" required><option>Mobile</option><option>Accessory</option></select></label>
+        <label>Brand<input id="brand" placeholder="Samsung, Apple, Boat…"></label>
+        <label>Model / variant<input id="model" placeholder="8GB / 256GB"></label>
+        <label>Colour<input id="color" placeholder="Black"></label>
+        <label>SKU / serial reference<input id="sku" placeholder="Optional unique code"></label>
+        <label>Quantity *<input id="quantity" type="number" min="0" step="1" required value="0"></label>
+        <label>Reorder level<input id="reorder" type="number" min="0" step="1" value="3"></label>
+        <label>Purchase price (₹)<input id="purchase" type="number" min="0" step="0.01" value="0"></label>
+        <label>Selling price (₹)<input id="selling" type="number" min="0" step="0.01" value="0"></label>
+        <label class="wide">Product image URL<input id="image" type="url" placeholder="https://… (optional)"></label>
+        <label class="wide">Notes<textarea id="notes" rows="2" placeholder="Warranty, supplier or other details"></textarea></label>
+      </div>
+      <p id="formError" class="error"></p><div class="modal-actions"><button type="button" class="secondary" id="cancelDialog">Cancel</button><button class="primary" type="submit">Save item</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status"></div>
+</body></html>
